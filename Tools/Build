@@ -1,0 +1,52 @@
+#!/bin/sh
+
+clear
+
+rm -r ./Build
+mkdir ./Build
+
+
+echo ""
+echo ""
+echo "Compiling Object Files"
+echo ""
+echo ""
+
+
+g++                             \
+    -I/usr/include/libserial    \
+    -o ./Build/Serial.o         \
+    -fmodules-ts                \
+    -std=c++20                  \
+    ./Source/Serial.cpp         \
+    -fPIC                       \
+    -c
+
+
+echo ""
+echo ""
+echo "Compiling Library"
+echo ""
+echo ""
+
+
+g++                             \
+    -o ./Build/Serial.so        \
+    -lserial                    \
+    -shared                     \
+    -W                          \
+    ./Build/Serial.o
+
+g++                             \
+    -o ./Build/Serial.dylib     \
+    -shared                     \
+    -lserial                    \
+    -W                          \
+    ./Build/Serial.o
+
+g++                             \
+    -o ./Build/Serial.dll       \
+    -shared                     \
+    -lserial                    \
+    -W                          \
+    ./Build/Serial.o
