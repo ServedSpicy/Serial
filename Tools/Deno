@@ -1,0 +1,12 @@
+#!/bin/sh
+
+clear
+
+./Tools/Build
+
+deno run                    \
+    --allow-net             \
+    --allow-ffi             \
+    --unstable              \
+    --allow-read=/dev/,./.. \
+    ./Test/Deno/Test.js
