@@ -1,0 +1,72 @@
+#!/bin/sh
+
+clear
+
+rm -r ./Build
+mkdir ./Build
+
+base="$(dirname -- $(readlink -fn -- "$0"; echo x))/.."
+
+
+echo ""
+echo ""
+echo "Compiling Object Files"
+echo ""
+echo ""
+
+
+Objects=""
+
+
+cd Source
+
+for file in *.cpp
+do
+    object="./Build/${file%.*}.o"
+    Objects="${Objects} ${object}"
+
+    g++                             \
+        -I/usr/include/libserial    \
+        -I"${base}/Source"          \
+        -fmodules-ts "$file"        \
+        -std=c++20                  \
+        -D'Testing true'            \
+        -o ".$object"               \
+        -c
+done
+
+cd ..
+
+
+Objects="${Objects} ./Build/Test.o"
+
+g++                                     \
+    -I/usr/include/libserial            \
+    -I"${base}/Source"                  \
+    -fmodules-ts "./Test/C++/Test.cpp"  \
+    -std=c++20                          \
+    -o "./Build/Test.o"                 \
+    -c
+
+
+echo ""
+echo ""
+echo "Compiling Binary"
+echo ""
+echo ""
+
+
+g++ $Objects        \
+    -o ./Build/App  \
+    -lserial        \
+    -lusb
+
+
+echo ""
+echo ""
+echo "Testing"
+echo ""
+echo ""
+
+
+./Build/App
