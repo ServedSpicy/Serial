@@ -32,15 +32,15 @@ int main(int,char const * []){
 
 
 
-    vector<uint8_t> bytes = { 1 , (uint8_t) a , (uint8_t) b , (uint8_t) 11 };
+    vector<uint8_t> bytes = { (uint8_t) a , (uint8_t) b , (uint8_t) 11 };
     bytes.insert(bytes.end(),s.begin(),s.end());
 
     const auto bs = bytes.data();
 
     cout << "Byte Composition : " << bs << endl;
 
-    // const auto code = synchronize((uint8_t *) "/dev/ttyUSB0",(uint8_t *) bs,15);
-    const auto code = synchronize((uint8_t *) "/dev/ttyUSB0",(uint8_t *) {},0);
+    const auto code = synchronize((uint8_t *) "/dev/ttyUSB0",(uint8_t *) bs,14);
+    // const auto code = synchronize((uint8_t *) "/dev/ttyUSB0",(uint8_t *) s.data(),12);
 
     cout << "ExitCode : " << code << endl;
 
