@@ -24,7 +24,7 @@ The library can be build by executing [`Build`][Script Build].
 2. Start building with:
 
     ```sh
-    Tools/Build
+    Tools/Build.sh
     ```
 
 ## Testing
@@ -40,7 +40,7 @@ Execute the **[C++][Script C++]** test script by:
 3. Start the test with:
 
     ```sh
-    Tools/C++
+    Tools/C++.sh
     ```
 
 ### Deno
@@ -54,7 +54,7 @@ Execute the **[Deno][Script Deno]** integration test script by:
 3. Start the test with:
 
     ```sh
-    Tools/Deno
+    Tools/Deno.sh
     ```
 
 

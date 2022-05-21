@@ -14,6 +14,9 @@ using namespace std;
 using namespace LibSerial;
 
 
+const char * Version = "1.0.3";
+
+
 #define cycle while(true)
 
 #define finish(exitCode) {  \
@@ -22,7 +25,7 @@ using namespace LibSerial;
     }
 
 
-const auto SearchTimeout = 2000UL;
+const auto SearchTimeout = 6000UL;
 
 
 using namespace chrono;
@@ -73,12 +76,23 @@ extern "C" {
 
         try {
 
+            cout << "Serial Library" << endl;
+            cout << "==============" << endl;
+
+            cout << "Version : " << Version << endl;
             cout << "Using device : " << device << endl;
+            cout << "Bytes : " << bytes << endl;
+            cout << "Size : " << size << endl;
+
 
             cout << "Starting Syncronization" << endl;
 
-
             auto serial = connect((char *) device);
+
+
+            cout << "Flusing Input Buffer" << endl;
+
+            serial.FlushInputBuffer();
 
 
             cout << "Connected To Machine" << endl;
@@ -101,11 +115,11 @@ extern "C" {
             cout << "Status Available" << endl;
 
 
-            char status;
+            uint8_t status;
             serial.ReadByte(status);
 
 
-            cout << "Machine Status : " << status << endl;
+            cout << "Machine Status : " << (int) status << endl;
 
 
             if(status != 1)
@@ -121,8 +135,10 @@ extern "C" {
             cout << "Sending " << size << " Bytes" << endl;
 
 
-            for(int b = 0;b < size;b++)
+            for(int b = 0;b < size;b++){
+                cout << "Sending byte " << b << " = " << bytes[b] << (int) bytes[b] << endl;
                 serial.WriteByte((unsigned char) bytes[b]);
+            }
 
 
             cout << "Data Sent" << endl;
@@ -142,5 +158,3 @@ extern "C" {
 }
 
 #endif
-
-

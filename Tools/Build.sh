@@ -1,9 +1,12 @@
 #!/bin/sh
 
-clear
+base="$(dirname -- $(readlink -fn -- "$0"; echo x))/.."
+build="${base}/Build"
+source="${base}/Source"
+test="${base}Test"
 
-rm -r ./Build
-mkdir ./Build
+rm -r $build
+mkdir $build
 
 
 echo ""
@@ -15,12 +18,12 @@ echo ""
 
 g++                             \
     -I/usr/include/libserial    \
-    -o ./Build/Serial.o         \
+    -o $build/Serial.o          \
     -fmodules-ts                \
     -std=c++20                  \
-    ./Source/Serial.cpp         \
     -fPIC                       \
-    -c
+    -c                          \
+    $source/Serial.cpp
 
 
 echo ""
@@ -31,22 +34,22 @@ echo ""
 
 
 g++                             \
-    -o ./Build/Serial.so        \
-    -lserial                    \
+    $build/Serial.o             \
+    -o $build/Serial.so         \
     -shared                     \
     -W                          \
-    ./Build/Serial.o
+    -lserial
 
 g++                             \
-    -o ./Build/Serial.dylib     \
+    $build/Serial.o             \
+    -o $build/Serial.dylib      \
     -shared                     \
-    -lserial                    \
     -W                          \
-    ./Build/Serial.o
+    -lserial
 
 g++                             \
-    -o ./Build/Serial.dll       \
+    $build/Serial.o             \
+    -o $build/Serial.dll        \
     -shared                     \
-    -lserial                    \
     -W                          \
-    ./Build/Serial.o
+    -lserial
