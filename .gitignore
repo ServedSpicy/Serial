@@ -6,3 +6,8 @@
 #   Build Folder
 
 Build/
+
+
+#   File Explorer
+
+.directory
